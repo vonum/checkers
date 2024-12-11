@@ -19,34 +19,34 @@ func TestMsgCreateGame_ValidateBasic(t *testing.T) {
 			name: "invalid creator address",
 			msg: types.MsgCreateGame{
 				Creator: "invalid_address",
-        Black: sample.AccAddress(),
-        Red: sample.AccAddress(),
+				Black:   sample.AccAddress(),
+				Red:     sample.AccAddress(),
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "invalid black address",
 			msg: types.MsgCreateGame{
-        Creator: sample.AccAddress(),
-        Black: "invalid address",
-        Red: sample.AccAddress(),
+				Creator: sample.AccAddress(),
+				Black:   "invalid address",
+				Red:     sample.AccAddress(),
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "invalid red address",
 			msg: types.MsgCreateGame{
-        Creator: sample.AccAddress(),
-        Black: sample.AccAddress(),
-        Red: "invalid address",
+				Creator: sample.AccAddress(),
+				Black:   sample.AccAddress(),
+				Red:     "invalid address",
 			},
 			err: sdkerrors.ErrInvalidAddress,
 		}, {
 			name: "valid message",
 			msg: types.MsgCreateGame{
-        Creator: sample.AccAddress(),
-        Black: sample.AccAddress(),
-        Red: sample.AccAddress(),
+				Creator: sample.AccAddress(),
+				Black:   sample.AccAddress(),
+				Red:     sample.AccAddress(),
 			},
-      err: nil,
+			err: nil,
 		},
 	}
 	for _, tt := range tests {

@@ -13,33 +13,33 @@ func (k msgServer) CreateGame(goCtx context.Context, msg *types.MsgCreateGame) (
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
 	// TODO: Handling the message
-  systemInfo, found := k.Keeper.GetSystemInfo(ctx)
-  if !found {
-    panic("System Info not found")
-  }
+	systemInfo, found := k.Keeper.GetSystemInfo(ctx)
+	if !found {
+		panic("System Info not found")
+	}
 
-  newIndex := strconv.FormatUint(systemInfo.NextId, 10)
-  newGame := rules.New()
+	newIndex := strconv.FormatUint(systemInfo.NextId, 10)
+	newGame := rules.New()
 
-  storedGame := types.StoredGame{
-    Index: newIndex,
-    Board: newGame.String(),
-    Turn: rules.PieceStrings[newGame.Turn],
-    Black: msg.Black,
-    Red: msg.Red,
-  }
+	storedGame := types.StoredGame{
+		Index: newIndex,
+		Board: newGame.String(),
+		Turn:  rules.PieceStrings[newGame.Turn],
+		Black: msg.Black,
+		Red:   msg.Red,
+	}
 
-  err := storedGame.Validate()
-  if err != nil {
-    return nil, err
-  }
+	err := storedGame.Validate()
+	if err != nil {
+		return nil, err
+	}
 
-  k.Keeper.SetStoredGame(ctx, storedGame)
+	k.Keeper.SetStoredGame(ctx, storedGame)
 
-  systemInfo.NextId++
-  k.Keeper.SetSystemInfo(ctx, systemInfo)
+	systemInfo.NextId++
+	k.Keeper.SetSystemInfo(ctx, systemInfo)
 
 	return &types.MsgCreateGameResponse{
-    GameIndex: newIndex,
-  }, nil
+		GameIndex: newIndex,
+	}, nil
 }
