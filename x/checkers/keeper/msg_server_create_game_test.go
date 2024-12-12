@@ -47,7 +47,8 @@ func TestCreate1GameHasSaved(t *testing.T) {
 		Black:   bob,
 		Red:     carol,
 	})
-	systemInfo, found := keeper.GetSystemInfo(sdk.UnwrapSDKContext(context))
+  ctx := sdk.UnwrapSDKContext(context)
+	systemInfo, found := keeper.GetSystemInfo(ctx)
 	require.True(t, found)
 	require.EqualValues(t, types.SystemInfo{
 		NextId: 2,
@@ -61,6 +62,7 @@ func TestCreate1GameHasSaved(t *testing.T) {
 		Black: bob,
 		Red:   carol,
     Winner: "*",
+    Deadline: types.FormatDeadline(ctx.BlockTime().Add(types.MaxTurnDuration)),
 	}, game1)
 }
 
